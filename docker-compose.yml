@@ -62,7 +62,6 @@ services:
         build:
             context: ./server
             dockerfile: Dockerfile
-
         <<: *defaults
         networks:
             - omero-network
