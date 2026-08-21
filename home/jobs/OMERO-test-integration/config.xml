@@ -119,7 +119,7 @@ omero certificates
 ## END LOAD CONFIG
 
 # Java config
-omero config set omero.jvmcfg.append '--add-opens java.base/java.lang=ALL-UNNAMED --add-exports java.naming/com.sun.jndi.ldap=ALL-UNNAMED'
+omero config set omero.jvmcfg.append '--add-opens java.base/java.lang=ALL-UNNAMED'
 
 ## PURGE
 
