@@ -62,11 +62,11 @@ Restart Issue:
 
 The restart issue on the VM: the machine restarts, but the containers do not restart with it.  
 
-This has been investigated on the merge-ci host (**ome-devsp-ap1**), it occurred because the Docker image disk (**docker-storage_ap1.img**) was not properly mounted to **/var/lib/docker-xfs-ap1**. To resolve this, I updated the **/etc/fstab** file so the mount depends on the scratch folder being available and retries every 30 seconds if it fails, i.e.:
+This has been investigated on the merge-ci host (**ome-devsp-ap1**), it occurred because the Docker image disk (**docker-storage_ap1.img**) was not properly mounted to **/var/lib/docker-xfs-ap1**. To resolve this, The **/etc/fstab** file has been updated so the mount depends on the scratch folder being available and retries every 30 seconds if it fails, i.e.:
 
     /uod/idr/scratch/docker-storage_ap1.img /var/lib/docker-xfs-ap1 xfs loop,defaults,x-systemd.requires-mounts-for=/uod/idr/scratch,,x-systemd.mount-timeout=30  0 0
 
-I also updated the Docker service file so it relies on the mounted image disk. Specifically, I appended the following clause to the end of both the **After** and **Requires** lines within the [Unit] section:
+The Docker service file has been updated so it relies on the mounted image disk. Specifically, the following clause has been appended to the end of both the **After** and **Requires** lines within the [Unit] section:
 
     var-lib-docker\x2dxfs\x2dap1.mount
 
