@@ -66,8 +66,13 @@ This has been investigated on the merge-ci host (**ome-devsp-ap1**), it occurred
 
     /uod/idr/scratch/docker-storage_ap1.img /var/lib/docker-xfs-ap1 xfs loop,defaults,x-systemd.requires-mounts-for=/uod/idr/scratch,,x-systemd.mount-timeout=30  0 0
 
-The Docker service file has been updated so it relies on the mounted image disk. Specifically, the following clause has been appended to the end of both the **After** and **Requires** lines within the [Unit] section:
+The Docker service file has been updated so it relies on the mounted image disk. The following clause 
 
-    var-lib-docker\x2dxfs\x2dap1.mount
+    [Unit]
+    RequiresMountsFor=/var/lib/docker-xfs-ap1
 
-Following these adjustments, a system reboot successfully brought back all Docker containers. The identical fix has now been deployed to the active merge-ci host (**idr3-slot2**).
+has been added to this file:
+    
+    /etc/systemd/system/docker.service.d/override.conf
+
+Following these adjustments, a system reboot successfully brought back all Docker containers. The identical fix should be deployed to the active merge-ci host (**idr3-slot2**).
